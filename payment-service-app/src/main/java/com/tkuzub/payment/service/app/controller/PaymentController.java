@@ -1,28 +1,29 @@
 package com.tkuzub.payment.service.app.controller;
 
-import com.tkuzub.payment.service.app.model.Payment;
+import com.tkuzub.payment.service.app.dto.PaymentDto;
+import com.tkuzub.payment.service.app.service.PaymentService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
+@AllArgsConstructor
+@RequestMapping("/api/payments")
 public class PaymentController {
-    private final Map<Long, Payment> payments = Map.of(
-            1L, new Payment(1, 100.00),
-            2L, new Payment(2, 200.00));
 
-    @GetMapping("payments/{id}")
-    public Payment getPaymentById(@PathVariable("id") Long id) {
-        return payments.get(id);
+    private final PaymentService paymentService;
+
+    @GetMapping("/{id}")
+    public PaymentDto getPaymentById(@PathVariable("id") Long id) {
+        return paymentService.getById(id);
     }
 
-    @GetMapping("payments")
-    public Collection<Payment> getAllPayments() {
-        return payments.values();
+    @GetMapping()
+    public List<PaymentDto> getAllPayments() {
+        return paymentService.getAll();
     }
 }
