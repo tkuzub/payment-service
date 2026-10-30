@@ -1,0 +1,7 @@
+services:
+  payment-service-app:
+    image: payment-service:1.0.0
+    container_name: payment-service-app
+    ports:
+      - "8080:8080"
+  
